@@ -1,0 +1,44 @@
+{
+    "name": "razesoldier/eims-jwt",
+    "description": "JWT service for EIMS",
+    "keywords": [
+        "eve-online",
+        "laravel"
+    ],
+    "version": "1.0",
+    "authors": [
+        {
+            "name": "RazeSoldier",
+            "email": "razesoldier@outlook.com"
+        }
+    ],
+    "license": "Apache-2.0",
+    "require": {
+        "php": "^8.0",
+        "lcobucci/jwt": "^4.1",
+        "illuminate/support": "^v8.78"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.23"
+    },
+    "autoload": {
+        "psr-4": {
+            "RazeSoldier\\EIMS\\Jwt\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RazeSoldier\\EIMS\\Jwt\\JWTServiceProvider"
+            ],
+            "aliases": {
+                "JWT": "JWT"
+            }
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
+    }
+}
