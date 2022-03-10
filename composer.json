@@ -5,7 +5,7 @@
         "eve-online",
         "laravel"
     ],
-    "version": "1.0",
+    "version": "1.1",
     "authors": [
         {
             "name": "RazeSoldier",
@@ -16,7 +16,7 @@
     "require": {
         "php": "^8.0",
         "lcobucci/jwt": "^4.1",
-        "illuminate/support": "^v8.78"
+        "illuminate/support": "^9.0 || ^v8.0"
     },
     "require-dev": {
         "orchestra/testbench": "^6.23"
