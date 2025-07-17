@@ -14,7 +14,7 @@ class JWTServiceTest extends TestCase
     {
         $service = resolve(JWTService::class);
         $token = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IkpXVC1TaWduYXR1cmUtS2V5IiwidHlwIjoiSldUIn0.eyJzY3AiOiJlc2ktY29udHJhY3RzLnJlYWRfY2hhcmFjdGVyX2NvbnRyYWN0cy52MSIsImp0aSI6IjgxOTY2N2FjLTkxMzYtNDVjYS1iY2UyLTBlNjgyMzJmMzVjMCIsImtpZCI6IkpXVC1TaWduYXR1cmUtS2V5Iiwic3ViIjoiQ0hBUkFDVEVSOkVWRToyMTEyMjU5MzYzIiwiYXpwIjoiYmM5MGFhNDk2YTQwNDcyNGE5M2Y0MWI0ZjRlOTc3NjEiLCJ0ZW5hbnQiOiJzZXJlbml0eSIsInRpZXIiOiJsaXZlIiwicmVnaW9uIjoiY2hpbmEiLCJuYW1lIjoiUmF6ZVNvbGRpZXIiLCJvd25lciI6IlYyclhhY1B4VURuc3FSVGFCNm51NXZlQ05IST0iLCJleHAiOjE2MzU0MzMxODgsImlzcyI6ImxvZ2luLmV2ZXBjLjE2My5jb20ifQ.AAA';
-        $res = $service->parser()->parse($token);
+        $res = $service->parse($token);
         $this->assertTrue($res->hasBeenIssuedBy('login.evepc.163.com'));
         $this->assertFalse($res->hasBeenIssuedBy('login.eveonline.com'));
     }

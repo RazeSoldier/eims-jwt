@@ -7,24 +7,27 @@
 namespace RazeSoldier\EIMS\Jwt;
 
 use Lcobucci\JWT\{
-    Configuration,
-    UnencryptedToken,
+    Encoding\JoseEncoder,
+    Token,
+    Token\Parser,
     Validation\Constraint,
+    Validation\Validator,
 };
 
 /**
  * 为EIMS提供JWT服务。可以通过本实例获得EVE SSO访问令牌的角色名、角色ID
- * @mixin Configuration
  */
 class JWTService
 {
     public const ISSUER = 'login.evepc.163.com';
 
-    private Configuration $jwtConfig;
+    private Parser $parser;
+    private Validator $validator;
 
     public function __construct()
     {
-        $this->jwtConfig = Configuration::forUnsecuredSigner();
+        $this->parser = new Parser(new JoseEncoder());
+        $this->validator = new Validator();
     }
 
     /**
@@ -32,8 +35,8 @@ class JWTService
      */
     public function validateAccessToken(string $token): bool
     {
-        $token = $this->jwtConfig->parser()->parse($token);
-        return $this->jwtConfig->validator()->validate($token, ...$this->getConstraints());
+        $token = $this->parser->parse($token);
+        return $this->validator->validate($token, ...$this->getConstraints());
     }
 
     /**
@@ -41,8 +44,7 @@ class JWTService
      */
     public function getCharacterName(string $token): string
     {
-        /** @var UnencryptedToken $res */
-        $res = $this->jwtConfig->parser()->parse($token);
+        $res = $this->parser->parse($token);
         return $res->claims()->get('name');
     }
 
@@ -51,17 +53,16 @@ class JWTService
      */
     public function getCharacterId(string $token): int
     {
-        /** @var UnencryptedToken $res */
-        $res = $this->jwtConfig->parser()->parse($token);
+        $res = $this->parser->parse($token);
         // sub的格式类似`CHARACTER:EVE:<character_id>`
         $sub = $res->claims()->get('sub');
         preg_match('/^CHARACTER:EVE:(?<id>[0-9]*)$/', $sub, $matches);
         return $matches['id'];
     }
 
-    public function __call(string $name, array $arguments)
+    public function parse(string $token): Token
     {
-        return $this->jwtConfig->$name(...$arguments);
+        return $this->parser->parse($token);
     }
 
     private function getConstraints(): array
