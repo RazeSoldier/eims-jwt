@@ -32,7 +32,7 @@
                 "RazeSoldier\\EIMS\\Jwt\\JWTServiceProvider"
             ],
             "aliases": {
-                "JWT": "JWT"
+                "JWT": "RazeSoldier\\EIMS\\Jwt\\JWT"
             }
         }
     },
